@@ -1,0 +1,10 @@
+This is a utility that can used to help with version bumping.
+
+Right now the target is just to use it in scripting with SemVer versions, but I
+could see expanding it into other version schemes being useful as well.
+
+Other potential plans involve configuration for automatically bumping versions
+in various projects/formats (e.g. bump a package version in `Cargo.toml`).
+
+The first goal is just to have versions read in via `stdin`, possibly also on
+the command line.
