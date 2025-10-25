@@ -12,6 +12,68 @@ pub struct Version {
     pub patch: u64,
 }
 
+#[derive(Debug)]
+pub enum ParseError {
+    /// No separator between version parts was found when one was expected. For
+    /// the core version, this is a dot (.) character.
+    NoSeparatorFound,
+    /// An invalid character was found when trying to parse a number.
+    InvalidNumber,
+}
+
+/// The various parsing states and the contexts required for parsing them.
+///
+/// The `string` field in each state is the leftover un-parsed string from the
+/// previous state. Each enumeration acts as the state context and is
+/// essentially the partially-filled version up to that point. Thus, each state
+/// encapsulates the prior state's already-known version parts.
+enum ParseState<'parser> {
+    Trim { string: &'parser str },
+    Major { string: &'parser str },
+    Minor { string: &'parser str, major: u64 },
+    Patch { string: &'parser str, major: u64, minor: u64 },
+    Finished { major: u64, minor: u64, patch: u64 },
+}
+
+/// Parse a version string into a semantic version according to the
+/// specification outlined at https://semver.org/
+///
+/// The string may contain whitespaces only at the beginning and end (which will
+/// immediately be discarded).
+///
+/// Note that only the major, minor, and patch components of a semantic version
+/// are currently supported; thus the string must be in the format
+/// `<MAJOR>.<MINOR>.<PATCH>` (where `MAJOR`, `MINOR`, and `PATCH` are all
+/// solely comprised of digits), and will otherwise fail to parse.
+pub fn parse(string: &str) -> Result<Version, ParseError> {
+    log::trace!("Parsing semantic version from {string:?}.");
+
+    let mut parse_state = ParseState::Trim { string };
+
+    loop {
+        match parse_state {
+            ParseState::Trim { string } => {
+                parse_state = ParseState::Major { string: string.trim() }
+            },
+            ParseState::Major { string } => {
+                let (major, rest) = parse_number_to_dot(string)?;
+                parse_state = ParseState::Minor { string: rest, major };
+            },
+            ParseState::Minor { string, major } => {
+                let (minor, rest) = parse_number_to_dot(string)?;
+                parse_state = ParseState::Patch { string: rest, major, minor };
+            },
+            ParseState::Patch { string, major, minor } => {
+                let patch = parse_number(string)?;
+                parse_state = ParseState::Finished { major, minor, patch };
+            },
+            ParseState::Finished { major, minor, patch } => {
+                return Ok(Version { major, minor, patch });
+            },
+        }
+    }
+}
+
 /// Parse a number from a string.
 ///
 /// This is just a wrapper around the builtin `parse` method of `str` except it
