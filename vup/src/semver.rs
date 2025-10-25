@@ -129,8 +129,9 @@ pub fn parse(string: &str) -> Result<Version, ParseError> {
 
 /// Parse a number from a string.
 ///
-/// This is just a wrapper around the builtin `parse` method of `str` except it
-/// adds some logging and error information.
+/// Valid numbers can only contain digit characters and may not start with a
+/// `'0'` unless it is the only character in the number (meaning `"0"` is OK but
+/// `"00"` and `"01"` are not, for example).
 fn parse_number<T>(string: &str) -> Result<T, ParseError>
 where
     T: FromStr,
