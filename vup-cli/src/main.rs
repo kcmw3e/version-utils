@@ -41,14 +41,6 @@ fn main() -> Result<(), VupError> {
     let stdin = stdin();
     let mut stdout = stdout();
 
-    let mut version_string = String::new();
-
-    stdin.read_line(&mut version_string)?;
-    log::info!("Read version from stdin: '{version_string}'");
-
-    let version = semver::parse(version_string.as_str())?;
-    log::info!("Parsed version as {:?}", version);
-
     let cli = Cli::parse();
 
     let bump = match &cli.command {
@@ -56,6 +48,14 @@ fn main() -> Result<(), VupError> {
         Commands::Minor => semver::Bump::Minor(1),
         Commands::Patch => semver::Bump::Patch(1),
     };
+
+    let mut version_string = String::new();
+
+    stdin.read_line(&mut version_string)?;
+    log::info!("Read version from stdin: '{version_string}'");
+
+    let version = semver::parse(version_string.as_str())?;
+    log::info!("Parsed version as {:?}", version);
 
     let semver::Version { major, minor, patch } = version.bump(bump);
 
