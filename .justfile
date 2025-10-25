@@ -11,6 +11,7 @@ alias b := build
 alias t := test
 alias c := clean
 alias r := run
+alias p := package
 
 build-dir := 'target/'
 
@@ -19,6 +20,9 @@ build:
 
 test:
     cargo test
+
+package *args:
+    cargo package {{args}}
 
 clean:
     rm -r {{build-dir}}
