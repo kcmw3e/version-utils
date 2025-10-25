@@ -13,6 +13,46 @@ pub struct Version {
     pub patch: u64,
 }
 
+/// A specification for version bumps.
+///
+/// Version bumps are done this way instead of through separate functions for a
+/// few reasons. One is so that all of the bumping logic is in the same place,
+/// which makes future additions to it the bump context easier (such as allowing
+/// the patch component to stay consistent during a bump, for example).
+///
+/// Doing it this way also allows for chaining bumps easily, especially if a
+/// series of various bump levels are needed. For example:
+///
+/// ```rs
+/// let v = Version::new(1, 2, 3);
+/// let bumps = [Bump::Major(1), Bump::Minor(3), Bump::Patch(4)];
+///
+/// assert_eq!(
+///     bumps.iter().fold(v, |nv, bump| nv.bump(*bump)),
+///     Version::new(2, 3, 4),
+/// );
+/// ```
+#[derive(Debug, Clone, Copy)]
+pub enum Bump {
+    Major(u64),
+    Minor(u64),
+    Patch(u64),
+}
+
+impl Version {
+    pub fn bump(&self, bumpspec: Bump) -> Self {
+        match bumpspec {
+            Bump::Major(diff) => {
+                Self { major: self.major + diff, minor: 0, patch: 0 }
+            },
+            Bump::Minor(diff) => {
+                Self { minor: self.minor + diff, patch: 0, ..*self }
+            },
+            Bump::Patch(diff) => Self { patch: self.patch + diff, ..*self },
+        }
+    }
+}
+
 #[derive(Error, Debug)]
 pub enum ParseError {
     /// No separator between version parts was found when one was expected. For
