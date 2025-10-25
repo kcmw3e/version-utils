@@ -23,7 +23,7 @@ pub struct Version {
 /// Doing it this way also allows for chaining bumps easily, especially if a
 /// series of various bump levels are needed. For example:
 ///
-/// ```rs
+/// ```rust
 /// # use vup::semver::{Bump, Version};
 ///
 /// let v = Version{major: 1, minor: 2, patch: 3};
