@@ -6,7 +6,7 @@ use log;
 use thiserror::Error;
 use std::str::FromStr;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Version {
     pub major: u64,
     pub minor: u64,
