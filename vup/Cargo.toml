@@ -1,9 +1,9 @@
 [package]
 name = "vup"
+description = "Helps with bumping version numbers"
 authors.workspace = true
 version.workspace = true
 edition.workspace = true
-description.workspace = true
 
 [dependencies]
 log.workspace = true

@@ -1,5 +1,5 @@
 [workspace.package]
-description = "Bump some versions"
+description = "Version bumping utilities (also has a command line)."
 version = "0.0.0"
 authors = ["Casey Walker"]
 edition = "2024"

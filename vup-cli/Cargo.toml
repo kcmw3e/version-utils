@@ -1,9 +1,9 @@
 [package]
 name = "vup-cli"
+description = "Command line tool to bump version numbers."
 authors.workspace = true
 version.workspace = true
 edition.workspace = true
-description.workspace = true
 
 [[bin]]
 name = "vup"
