@@ -1,5 +1,6 @@
 [package]
 name = "vup"
+authors.workspace = true
 version.workspace = true
 edition.workspace = true
 description.workspace = true

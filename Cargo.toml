@@ -1,6 +1,7 @@
 [workspace.package]
 description = "Bump some versions"
 version = "0.0.0"
+authors = ["Casey Walker"]
 edition = "2024"
 
 [workspace]
