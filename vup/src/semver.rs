@@ -24,12 +24,12 @@ pub struct Version {
 /// series of various bump levels are needed. For example:
 ///
 /// ```rs
-/// let v = Version::new(1, 2, 3);
+/// let v = Version{major: 1, minor: 2, patch: 3};
 /// let bumps = [Bump::Major(1), Bump::Minor(3), Bump::Patch(4)];
 ///
 /// assert_eq!(
 ///     bumps.iter().fold(v, |nv, bump| nv.bump(*bump)),
-///     Version::new(2, 3, 4),
+///     Version{major: 2, minor: 3, patch: 4},
 /// );
 /// ```
 #[derive(Debug, Clone, Copy)]
