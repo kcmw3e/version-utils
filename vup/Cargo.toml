@@ -1,0 +1,9 @@
+[package]
+name = "vup"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[dependencies]
+log.workspace = true
+thiserror.workspace = true
