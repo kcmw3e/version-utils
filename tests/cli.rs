@@ -79,3 +79,21 @@ fn test_bump_patch_good_input() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test bumping `u64` max fails.
+#[test]
+fn test_bump_overflow() -> Result<(), Box<dyn std::error::Error>> {
+    for bump in ["major", "minor", "patch"] {
+        Command::cargo_bin("vup")?
+            .arg(bump)
+            .write_stdin(concat!(
+                "18446744073709551615.",
+                "18446744073709551615.",
+                "18446744073709551615",
+            ))
+            .assert()
+            .failure();
+    }
+
+    Ok(())
+}
