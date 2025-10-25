@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use log;
+use thiserror::Error;
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -12,12 +13,14 @@ pub struct Version {
     pub patch: u64,
 }
 
-#[derive(Debug)]
+#[derive(Error, Debug)]
 pub enum ParseError {
     /// No separator between version parts was found when one was expected. For
     /// the core version, this is a dot (.) character.
+    #[error("separator could not be fouund")]
     NoSeparatorFound,
     /// An invalid character was found when trying to parse a number.
+    #[error("could not parse number (non-digit character found)")]
     InvalidNumber,
 }
 
