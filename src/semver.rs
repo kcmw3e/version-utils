@@ -40,6 +40,8 @@ pub enum Bump {
 }
 
 impl Version {
+    const CORE_VERSION_SEPARATOR: char = '.';
+
     pub fn bump(&self, bumpspec: Bump) -> Self {
         match bumpspec {
             Bump::Major(diff) => {
@@ -145,9 +147,13 @@ where
 {
     log::trace!("Parsing number from {string:?} until dot.");
 
-    let Some((maybe_number, rest)) = string.split_once('.') else {
+    let Some((maybe_number, rest)) =
+        string.split_once(Version::CORE_VERSION_SEPARATOR)
+    else {
         log::error!("Could not find dot separator between version parts.");
-        return Err(ParseError::NoSeparatorFound { separator: '.' });
+        return Err(ParseError::NoSeparatorFound {
+            separator: Version::CORE_VERSION_SEPARATOR,
+        });
     };
 
     log::trace!(
