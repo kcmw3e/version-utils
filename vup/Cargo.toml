@@ -5,5 +5,5 @@ edition.workspace = true
 description.workspace = true
 
 [dependencies]
-log = "0.4.28"
-thiserror = "2.0.17"
+log.workspace = true
+thiserror.workspace = true
