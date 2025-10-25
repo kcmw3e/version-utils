@@ -7,7 +7,7 @@ use thiserror::Error;
 
 use clap::{Parser, Subcommand};
 
-mod semver;
+use vup::semver;
 
 #[derive(Parser, Debug)]
 #[command(version, about)]
