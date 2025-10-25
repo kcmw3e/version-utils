@@ -1,6 +1,6 @@
 [workspace.package]
 description = "Version bumping utilities (also has a command line)."
-version = "0.0.0"
+version = "0.1.0"
 authors = ["Casey Walker"]
 readme = "readme"
 license = "MIT"
@@ -15,4 +15,4 @@ members = ["vup", "vup-cli"]
 log = "0.4.28"
 thiserror = "2.0.17"
 
-vup = { path = "./vup", version = "0.0.0" }
+vup = { path = "./vup", version = "0.1.0" }
