@@ -101,11 +101,17 @@ pub fn parse(string: &str) -> Result<Version, ParseError> {
                 parse_state = ParseState::Major { string: string.trim() }
             },
             ParseState::Major { string } => {
-                let (major, rest) = parse_number_to_dot(string)?;
+                let (major, rest) = parse_number_to_separator(
+                    string,
+                    Version::CORE_VERSION_SEPARATOR,
+                )?;
                 parse_state = ParseState::Minor { string: rest, major };
             },
             ParseState::Minor { string, major } => {
-                let (minor, rest) = parse_number_to_dot(string)?;
+                let (minor, rest) = parse_number_to_separator(
+                    string,
+                    Version::CORE_VERSION_SEPARATOR,
+                )?;
                 parse_state = ParseState::Patch { string: rest, major, minor };
             },
             ParseState::Patch { string, major, minor } => {
@@ -137,23 +143,22 @@ where
     Ok(number)
 }
 
-/// Parse a number from the string up to a dot (.) character.
+/// Parse a number from the string up to the separator character.
 ///
-/// The remaining part of the string (without the dot) is returned along with
-/// the parsed number, unless there was an error during parsing.
-fn parse_number_to_dot<T>(string: &str) -> Result<(T, &str), ParseError>
+/// The remaining part of the string (without the separator) is returned along
+/// with the parsed number, unless there was an error during parsing.
+fn parse_number_to_separator<T>(
+    string: &str,
+    separator: char,
+) -> Result<(T, &str), ParseError>
 where
     T: FromStr,
 {
     log::trace!("Parsing number from {string:?} until dot.");
 
-    let Some((maybe_number, rest)) =
-        string.split_once(Version::CORE_VERSION_SEPARATOR)
-    else {
+    let Some((maybe_number, rest)) = string.split_once(separator) else {
         log::error!("Could not find dot separator between version parts.");
-        return Err(ParseError::NoSeparatorFound {
-            separator: Version::CORE_VERSION_SEPARATOR,
-        });
+        return Err(ParseError::NoSeparatorFound { separator });
     };
 
     log::trace!(
