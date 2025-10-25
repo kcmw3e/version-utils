@@ -145,3 +145,27 @@ fn test_negative_numbers() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test random characters in version numbers fails.
+#[test]
+fn test_non_digits() -> Result<(), Box<dyn std::error::Error>> {
+    let tests = [
+        "a.b.c",
+        "abc",
+        "---",
+        "x.1.a",
+        "1F.C.8A",
+    ];
+
+    for test in tests {
+        for bump in ["major", "minor", "patch"] {
+            Command::cargo_bin("vup")?
+                .arg(bump)
+                .write_stdin(test)
+                .assert()
+                .failure();
+        }
+    }
+
+    Ok(())
+}
