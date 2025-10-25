@@ -17,8 +17,8 @@ pub struct Version {
 pub enum ParseError {
     /// No separator between version parts was found when one was expected. For
     /// the core version, this is a dot (.) character.
-    #[error("separator could not be fouund")]
-    NoSeparatorFound,
+    #[error("separator '{separator}' could not be fouund")]
+    NoSeparatorFound{separator: char},
     /// An invalid character was found when trying to parse a number.
     #[error("could not parse number (non-digit character found)")]
     InvalidNumber,
@@ -107,7 +107,7 @@ where
 
     let Some((maybe_number, rest)) = string.split_once('.') else {
         log::error!("Could not find dot separator between version parts.");
-        return Err(ParseError::NoSeparatorFound);
+        return Err(ParseError::NoSeparatorFound{separator: '.'});
     };
 
     log::trace!(
