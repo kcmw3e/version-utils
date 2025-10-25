@@ -15,4 +15,4 @@ members = ["vup", "vup-cli"]
 log = "0.4.28"
 thiserror = "2.0.17"
 
-vup.path = "vup/"
+vup = { path = "./vup", version = "0.0.0" }
