@@ -2,6 +2,7 @@
 // information.
 //------------------------------------------------------------------------------
 
+#[derive(Debug)]
 pub struct Version {
     pub major: u64,
     pub minor: u64,
