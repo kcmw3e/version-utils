@@ -6,3 +6,4 @@ description = "Bump some versions"
 
 [dependencies]
 log = "0.4.28"
+thiserror = "2.0.17"
