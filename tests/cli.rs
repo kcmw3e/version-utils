@@ -97,3 +97,28 @@ fn test_bump_overflow() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test extra dot characters in the version string fail.
+#[test]
+fn test_extra_dots() -> Result<(), Box<dyn std::error::Error>> {
+    let tests = [
+        "1..1.1",
+        "1.1..1",
+        "1.1.1.",
+        ".1.1.1",
+        "..1.1.1",
+        "1..1..1",
+    ];
+
+    for test in tests {
+        for bump in ["major", "minor", "patch"] {
+            Command::cargo_bin("vup")?
+                .arg(bump)
+                .write_stdin(test)
+                .assert()
+                .failure();
+        }
+    }
+
+    Ok(())
+}
