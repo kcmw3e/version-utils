@@ -1,8 +1,8 @@
 [package]
 name = "vup-cli"
-version = "0.0.0"
-edition = "2024"
-description = "Bump some versions"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
 
 [dependencies]
 clap = { version = "4.5.50", features = ["derive"] }

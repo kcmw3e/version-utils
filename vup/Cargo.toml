@@ -1,8 +1,8 @@
 [package]
 name = "vup"
-version = "0.0.0"
-edition = "2024"
-description = "Bump some versions"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
 
 [dependencies]
 log = "0.4.28"
