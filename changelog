@@ -1,0 +1,9 @@
+v0.1.0
+  Initial release.
+
+  * Added commandline tool `vup` to read a version from standard input and print
+    the bumped version to standard output.
+  * Added tests for `vup` bumping logic and parsing (mostly) compliant SemVer
+    versions
+  * Added create `vup` separate from `vup-cli` to allow bumping code to be used
+    in other Rust projects
