@@ -61,7 +61,7 @@ impl Version {
 pub enum ParseError {
     /// No separator between version parts was found when one was expected. For
     /// the core version, this is a dot (.) character.
-    #[error("separator '{separator}' could not be fouund")]
+    #[error("separator '{separator}' could not be found")]
     NoSeparatorFound { separator: char },
     /// An invalid character was found when trying to parse a number.
     #[error("could not parse number (non-digit character found)")]
