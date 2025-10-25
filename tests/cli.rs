@@ -101,14 +101,7 @@ fn test_bump_overflow() -> Result<(), Box<dyn std::error::Error>> {
 /// Test extra dot characters in the version string fail.
 #[test]
 fn test_extra_dots() -> Result<(), Box<dyn std::error::Error>> {
-    let tests = [
-        "1..1.1",
-        "1.1..1",
-        "1.1.1.",
-        ".1.1.1",
-        "..1.1.1",
-        "1..1..1",
-    ];
+    let tests = ["1..1.1", "1.1..1", "1.1.1.", ".1.1.1", "..1.1.1", "1..1..1"];
 
     for test in tests {
         for bump in ["major", "minor", "patch"] {
@@ -126,12 +119,7 @@ fn test_extra_dots() -> Result<(), Box<dyn std::error::Error>> {
 /// Test negative numbers fail.
 #[test]
 fn test_negative_numbers() -> Result<(), Box<dyn std::error::Error>> {
-    let tests = [
-        "-1.1.1",
-        "1.-1.1",
-        "1.1.-1",
-        "-0.1.1",
-    ];
+    let tests = ["-1.1.1", "1.-1.1", "1.1.-1", "-0.1.1"];
 
     for test in tests {
         for bump in ["major", "minor", "patch"] {
@@ -149,13 +137,7 @@ fn test_negative_numbers() -> Result<(), Box<dyn std::error::Error>> {
 /// Test random characters in version numbers fails.
 #[test]
 fn test_non_digits() -> Result<(), Box<dyn std::error::Error>> {
-    let tests = [
-        "a.b.c",
-        "abc",
-        "---",
-        "x.1.a",
-        "1F.C.8A",
-    ];
+    let tests = ["a.b.c", "abc", "---", "x.1.a", "1F.C.8A"];
 
     for test in tests {
         for bump in ["major", "minor", "patch"] {
@@ -174,10 +156,7 @@ fn test_non_digits() -> Result<(), Box<dyn std::error::Error>> {
 #[test]
 fn test_empty_stdin() -> Result<(), Box<dyn std::error::Error>> {
     for bump in ["major", "minor", "patch"] {
-        Command::cargo_bin("vup")?
-            .arg(bump)
-            .assert()
-            .failure();
+        Command::cargo_bin("vup")?.arg(bump).assert().failure();
     }
 
     Ok(())
