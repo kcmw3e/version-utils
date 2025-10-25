@@ -3,15 +3,34 @@
 
 use std::io::{IsTerminal, Write, stdin, stdout};
 
-use semver::ParseError;
 use thiserror::Error;
 
+use clap::{Parser, Subcommand};
+
 mod semver;
+
+#[derive(Parser, Debug)]
+#[command(version, about)]
+#[command(propagate_version = true)]
+struct Cli {
+    #[arg(long)]
+    only: bool,
+
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Subcommand, Debug)]
+enum Commands {
+    Major,
+    Minor,
+    Patch,
+}
 
 #[derive(Error, Debug)]
 pub enum VupError {
     #[error("encountered an error parsing the version: {0}")]
-    ParseError(#[from] ParseError),
+    ParseError(#[from] semver::ParseError),
     #[error("could not perform IO: {0}")]
     Io(#[from] std::io::Error),
 }
@@ -30,7 +49,15 @@ fn main() -> Result<(), VupError> {
     let version = semver::parse(version_string.as_str())?;
     log::info!("Parsed version as {:?}", version);
 
-    let semver::Version { major, minor, patch } = version;
+    let cli = Cli::parse();
+
+    let bump = match &cli.command {
+        Commands::Major => semver::Bump::Major(1),
+        Commands::Minor => semver::Bump::Minor(1),
+        Commands::Patch => semver::Bump::Patch(1),
+    };
+
+    let semver::Version { major, minor, patch } = version.bump(bump);
 
     write!(stdout, "{major}.{minor}.{patch}")?;
 
