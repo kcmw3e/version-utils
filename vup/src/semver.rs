@@ -137,6 +137,10 @@ where
 {
     log::trace!("Parsing number from {string:?}.");
 
+    if string.len() > 1 && string.starts_with('0') {
+        return Err(ParseError::InvalidNumber);
+    }
+
     let Ok(number) = string.parse::<T>() else {
         log::error!("Could not parse number from {string:?}.");
         return Err(ParseError::InvalidNumber);
