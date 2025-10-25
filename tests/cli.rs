@@ -169,3 +169,16 @@ fn test_non_digits() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test for failure on an empty standard input.
+#[test]
+fn test_empty_stdin() -> Result<(), Box<dyn std::error::Error>> {
+    for bump in ["major", "minor", "patch"] {
+        Command::cargo_bin("vup")?
+            .arg(bump)
+            .assert()
+            .failure();
+    }
+
+    Ok(())
+}
