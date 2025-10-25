@@ -3,6 +3,9 @@ name = "vup"
 description = "Helps with bumping version numbers"
 authors.workspace = true
 version.workspace = true
+readme.workspace = true
+license.workspace = true
+repository.workspace = true
 edition.workspace = true
 
 [dependencies]

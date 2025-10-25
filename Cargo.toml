@@ -2,6 +2,9 @@
 description = "Version bumping utilities (also has a command line)."
 version = "0.0.0"
 authors = ["Casey Walker"]
+readme = "readme"
+license = "MIT"
+repository = "https://github.com/kcmw3e/vup"
 edition = "2024"
 
 [workspace]
