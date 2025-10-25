@@ -105,7 +105,7 @@ where
 {
     log::trace!("Parsing number from {string:?} until dot.");
 
-    let Some((maybe_number, rest)) = string.split_once(".") else {
+    let Some((maybe_number, rest)) = string.split_once('.') else {
         log::error!("Could not find dot separator between version parts.");
         return Err(ParseError::NoSeparatorFound);
     };
