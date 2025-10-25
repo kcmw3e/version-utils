@@ -24,6 +24,8 @@ pub struct Version {
 /// series of various bump levels are needed. For example:
 ///
 /// ```rs
+/// # use vup::semver::{Bump, Version};
+///
 /// let v = Version{major: 1, minor: 2, patch: 3};
 /// let bumps = [Bump::Major(1), Bump::Minor(3), Bump::Patch(4)];
 ///
