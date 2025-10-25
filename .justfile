@@ -12,6 +12,7 @@ alias t := test
 alias c := clean
 alias r := run
 alias p := package
+alias i := install
 
 build-dir := 'target/'
 
@@ -23,6 +24,9 @@ test:
 
 package *args:
     cargo package {{args}}
+
+install:
+    cargo install --path 'vup-cli'
 
 clean:
     rm -r {{build-dir}}
