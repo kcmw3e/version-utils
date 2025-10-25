@@ -161,3 +161,28 @@ fn test_empty_stdin() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test numbers with leading 0s fail.
+#[test]
+fn test_leading_0s() -> Result<(), Box<dyn std::error::Error>> {
+    let tests = [
+        "01.1.1",
+        "000000000001.1.1",
+        "1.01.1",
+        "1.1.01",
+        "1.000000000000000000000000000000000000000000000000001.1",
+        "00.1.1",
+    ];
+
+    for test in tests {
+        for bump in ["major", "minor", "patch"] {
+            Command::cargo_bin("vup")?
+                .arg(bump)
+                .write_stdin(test)
+                .assert()
+                .failure();
+        }
+    }
+
+    Ok(())
+}
