@@ -10,5 +10,5 @@ edition = { workspace = true }
 
 [dependencies]
 thiserror = { workspace = true }
-toml_edit = "0.23.7"
+toml_edit = { workspace = true }
 vup = { workspace = true }
