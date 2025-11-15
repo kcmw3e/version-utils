@@ -1,12 +1,12 @@
 [package]
 name = "vup-cli"
 description = "Command line tool to bump version numbers."
-authors.workspace = true
-version.workspace = true
-readme.workspace = true
-license.workspace = true
-repository.workspace = true
-edition.workspace = true
+authors = { workspace = true }
+version = { workspace = true }
+readme = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+edition = { workspace = true }
 
 [[bin]]
 name = "vup"
@@ -15,9 +15,9 @@ path = "src/main.rs"
 [dependencies]
 clap = { workspace = true }
 env_logger = { workspace = true }
-log.workspace = true
-thiserror.workspace = true
-vup.workspace = true
+log = { workspace = true }
+thiserror = { workspace = true }
+vup = { workspace = true }
 
 [dev-dependencies]
 assert_cmd = "2.0.17"
