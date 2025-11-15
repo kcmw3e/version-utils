@@ -1,0 +1,9 @@
+[package]
+name = "vpop"
+description = "Reading/writing version numbers from/to formatted text."
+authors = { workspace = true }
+version = { workspace = true }
+readme = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+edition = { workspace = true }
