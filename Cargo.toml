@@ -9,10 +9,11 @@ edition = "2024"
 
 [workspace]
 resolver = "3"
-members = ["vup", "vup-cli"]
+members = ["vup", "vup-cli", "vpop"]
 
 [workspace.dependencies]
 log = "0.4.28"
 thiserror = "2.0.17"
 
 vup = { path = "./vup", version = "0.1.0" }
+vpop = { path = "./vpop", version = "0.1.0" }
