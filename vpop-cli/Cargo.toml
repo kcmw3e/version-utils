@@ -1,0 +1,13 @@
+[package]
+name = "vpop-cli"
+description = "Command to read/write version numbers from/to formatted text."
+authors = { workspace = true }
+version = { workspace = true }
+readme = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+edition = { workspace = true }
+
+[[bin]]
+name = "vpop"
+path = "src/main.rs"
