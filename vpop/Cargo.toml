@@ -9,5 +9,6 @@ repository = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
+thiserror = { workspace = true }
 toml_edit = "0.23.7"
 vup = { workspace = true }
