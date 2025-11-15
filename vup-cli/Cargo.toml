@@ -13,8 +13,8 @@ name = "vup"
 path = "src/main.rs"
 
 [dependencies]
-clap = { version = "4.5.50", features = ["derive"] }
-env_logger = "0.11.8"
+clap = { workspace = true }
+env_logger = { workspace = true }
 log.workspace = true
 thiserror.workspace = true
 vup.workspace = true
