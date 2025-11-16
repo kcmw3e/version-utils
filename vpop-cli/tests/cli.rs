@@ -71,3 +71,28 @@ fn test_empty_stdin() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test bad-formatted config paths fails.
+#[test]
+fn test_bad_format_config_paths() -> Result<(), Box<dyn std::error::Error>> {
+    let tests = [
+        (r#"version = "1.2.3""#, ".version"),
+        (r#"package.version = "1.2.3""#, "package..version"),
+        (r#"package.version = "1.2.3""#, "package,version"),
+        (r#"package.version = "1.2.3""#, "package,.version"),
+        (r#"package.version = "1.2.3""#, "package*.version"),
+    ];
+
+    for test in tests {
+        let (input, path) = test;
+
+        Command::cargo_bin("vpop")?
+            .arg("--path")
+            .arg(path)
+            .write_stdin(input)
+            .assert()
+            .failure();
+    }
+
+    Ok(())
+}
