@@ -11,3 +11,11 @@ edition = { workspace = true }
 [[bin]]
 name = "vpop"
 path = "src/main.rs"
+
+[dependencies]
+clap = { workspace = true }
+env_logger = { workspace = true }
+log = { workspace = true }
+thiserror = { workspace = true }
+toml_edit = { workspace = true }
+vpop = { workspace = true }
