@@ -1,1 +1,40 @@
+use assert_cmd::Command;
+
+/// Test retrieving well-formatted version numbers and files.
+#[test]
+fn test_good_input() -> Result<(), Box<dyn std::error::Error>> {
+    // Each test consists of 3 values: the TOML configuration, the path to the
+    // version number, and the expected value.
+    let tests = [
+        (r#"version = "1.2.3""#, "version", "1.2.3"),
+        (r#"version = "0.0.0""#, "version", "0.0.0"),
+        (
+            r#"version = "10231231231209124.1241321231.1024391123""#,
+            "version",
+            "10231231231209124.1241321231.1024391123",
+        ),
+        (r#"x.y.z = "1.2.3""#, "x.y.z", "1.2.3"),
+        // This one is a real use-case based on Cargo workspace configurations.
+        (
+            r#"[workspace.package]
+            version = "1.2.3""#,
+            "workspace.package.version",
+            "1.2.3",
+        ),
+    ];
+
+    for test in tests {
+        let (input, path, output) = test;
+
+        Command::cargo_bin("vpop")?
+            .arg("--path")
+            .arg(path)
+            .write_stdin(input)
+            .assert()
+            .success()
+            .stdout(output);
+    }
+
+    Ok(())
+}
 
