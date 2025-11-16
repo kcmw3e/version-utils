@@ -63,3 +63,11 @@ fn test_config_path_nonexistent() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test for failure on an empty standard input.
+#[test]
+fn test_empty_stdin() -> Result<(), Box<dyn std::error::Error>> {
+    Command::cargo_bin("vpop")?.arg("--path").arg("").assert().failure();
+
+    Ok(())
+}
