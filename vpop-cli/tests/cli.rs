@@ -38,3 +38,28 @@ fn test_good_input() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+/// Test retrieving paths that don't exist.
+#[test]
+fn test_config_path_nonexistent() -> Result<(), Box<dyn std::error::Error>> {
+    // Each test consists of 3 values: the TOML configuration, the path to the
+    // version number, and the expected value.
+    let tests = [
+        (r#"version = "1.2.3""#, "not-version"),
+        (r#"package = {version = "0.0.0"}"#, "version"),
+        (r#"a.b.c.e.f.g.h.i = {j = "0.0.0"}"#, "a.b.c.e.f.g.h.i.j.k"),
+        (r#"a.b.c.e.f.g.h.i = {j = "0.0.0"}"#, "a.b.c.e.f.g.h.z"),
+    ];
+
+    for test in tests {
+        let (input, path) = test;
+
+        Command::cargo_bin("vpop")?
+            .arg("--path")
+            .arg(path)
+            .write_stdin(input)
+            .assert()
+            .failure();
+    }
+
+    Ok(())
+}
