@@ -31,13 +31,10 @@ pub enum ParseError {
 /// value associated with key `"version"` in the table `"my-project"` in the
 /// root table. The key `"my-project.'first-version'"` is not valid for this
 /// function despite being a viable TOML key.
-pub fn get_version<T>(
+pub fn get_version(
     doc: DocumentMut,
     path: &str,
-) -> Result<semver::Version, ParseError>
-where
-    T: Read,
-{
+) -> Result<semver::Version, ParseError> {
     let item = path.split(".").try_fold(
         doc.as_item(),
         |item, key| -> Result<&Item, ParseError> {
