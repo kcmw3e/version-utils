@@ -40,7 +40,7 @@ pub fn get_version(
         |item, key| -> Result<&Item, ParseError> {
             // TODO: can we get better formatting?
             Ok(item
-                .as_table()
+                .as_table_like()
                 .ok_or(ParseError::WrongType)?
                 .get(key)
                 .ok_or(ParseError::MissingKey(String::from(key)))?)
