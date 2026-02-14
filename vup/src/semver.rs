@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use log;
-use std::str::FromStr;
+use std::{fmt::Display, str::FromStr};
 use thiserror::Error;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -54,6 +54,12 @@ impl Version {
             },
             Bump::Patch(diff) => Self { patch: self.patch + diff, ..*self },
         }
+    }
+}
+
+impl Display for Version {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}.{}.{}", self.major, self.minor, self.patch)
     }
 }
 
