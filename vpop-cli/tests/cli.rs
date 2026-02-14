@@ -96,3 +96,33 @@ fn test_bad_format_config_paths() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test retrieving inline tables.
+#[test]
+fn test_inline_tables() -> Result<(), Box<dyn std::error::Error>> {
+    // Each test consists of 3 values: the TOML configuration, the path to the
+    // version number, and the expected value.
+    let tests = [
+        (r#"package = {version = "0.0.0"}"#, "package.version", "0.0.0"),
+        (
+            r#"[top-level]
+            package = {version = "0.0.0"}"#,
+            "top-level.package.version",
+            "0.0.0",
+        ),
+    ];
+
+    for test in tests {
+        let (input, path, output) = test;
+
+        Command::cargo_bin("vpop")?
+            .arg("--path")
+            .arg(path)
+            .write_stdin(input)
+            .assert()
+            .success()
+            .stdout(output);
+    }
+
+    Ok(())
+}
