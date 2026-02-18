@@ -126,3 +126,31 @@ fn test_inline_tables() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/// Test retrieving non-string values fails.
+#[test]
+fn test_non_string_values() -> Result<(), Box<dyn std::error::Error>> {
+    // TODO: THIS WHOLE FUNCTION
+    // Each test consists of 3 values: the TOML configuration, the path to the
+    // version number, and the expected value.
+    let tests = [
+        (r#"version = 1"#, "version"),
+        (r#"package = {version = "0.0.0"}"#, "package"),
+        (r#"temperature = 1.2341"#, "temperature"),
+        (r#"is-on = false"#, "is-on"),
+        (r#"timing = 2026-02-17 19:20:00"#, "timing"),
+    ];
+
+    for test in tests {
+        let (input, path) = test;
+
+        Command::cargo_bin("vpop")?
+            .arg("--path")
+            .arg(path)
+            .write_stdin(input)
+            .assert()
+            .failure();
+    }
+
+    Ok(())
+}
