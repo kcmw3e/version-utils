@@ -1,4 +1,4 @@
-This is a utility that can used to help with version bumping.
+This is a utility that can be used to help with version bumping.
 
 Right now the target is just to use it in scripting with SemVer versions, but I
 could see expanding it into other version schemes being useful as well.
